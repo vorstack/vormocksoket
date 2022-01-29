@@ -1,0 +1,98 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.vorstack</groupId>
+    <artifactId>vormocksoket</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>mvn-golang</packaging>
+
+    <name>vormocksoket</name>
+    <description>Simple websocket mock server</description>
+    <url>https://github.com/YasuroNN</url>
+
+    <properties>
+        <mvn.golang.go.version>1.17.6</mvn.golang.go.version>
+        <go.wrapper.plugin.version>2.3.9</go.wrapper.plugin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mvn.version>3.0</mvn.version>
+        <final.extension></final.extension>
+
+        <!--skip push to local repo-->
+        <maven.install.skip>true</maven.install.skip>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <disableSdkDownload>true</disableSdkDownload>
+    </properties>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <profiles>
+        <profile>
+            <id>windows-profile</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <final.extension>.exe</final.extension>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <defaultGoal>clean package</defaultGoal>
+        <finalName>${project.artifactId}-${version}${final.extension}</finalName>
+        <sourceDirectory>${basedir}${file.separator}src</sourceDirectory>
+        <directory>${basedir}${file.separator}bin</directory>
+        <resources>
+            <resource>
+                <directory>${basedir}${file.separator}res</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>com.igormaznitsa</groupId>
+                <artifactId>mvn-golang-wrapper</artifactId>
+                <version>${go.wrapper.plugin.version}</version>
+                <extensions>true</extensions>
+
+                <configuration>
+                    <goVersion>${mvn.golang.go.version}</goVersion>
+                    <hideBanner>true</hideBanner>
+                    <!--<verbose>true</verbose>-->
+                    <useEnvVars>true</useEnvVars>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>default-build</id>
+                        <configuration>
+                            <packages>
+                                <main>main.go</main>
+                            </packages>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-test</id>
+                        <configuration>
+                            <!-- Needed to show console output -->
+                            <verbose>true</verbose>
+                            <packages>
+                                <folder>.${file.separator}...</folder>
+                            </packages>
+                        </configuration>
+                    </execution>
+                </executions>
+
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
