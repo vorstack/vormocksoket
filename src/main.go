@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"ru.vorstack/vormocksoket/server"
+	serverImpl "ru.vorstack/vormocksoket/server/impl"
+)
 
 func main() {
-	fmt.Println("init")
+	settings := server.Settings{"webSocket", true, 8080, "../ws"}
+	serverImpl.WebSocketServer{}.Run(settings)
 }
