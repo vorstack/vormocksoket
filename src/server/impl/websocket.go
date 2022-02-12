@@ -47,7 +47,7 @@ func getRawMessageByPath(dirPath string) map[string][]byte {
 				if err != nil {
 					panic(err)
 				}
-				subWsPath := path[len(dirPath) : len(path)-len(mockFileName)-1]
+				subWsPath := path[len(dirPath)-2 : len(path)-len(mockFileName)-1]
 				wsPath := strings.ReplaceAll(subWsPath, "\\", "/") // -1 it is slash
 				rawMesssages[wsPath] = content
 			}
@@ -62,6 +62,7 @@ func getRawMessageByPath(dirPath string) map[string][]byte {
 }
 
 func broadcast(w http.ResponseWriter, r *http.Request) {
+	log.Print("kek")
 	c, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Print("upgrade:", err)

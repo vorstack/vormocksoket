@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	settings := server.Settings{"webSocket", true, 8080, "../ws"}
+	settings := server.Settings{"webSocket", true, 8089, "./ws"}
 	serverImpl.WebSocketServer{}.Run(settings)
 }
